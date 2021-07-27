@@ -57,6 +57,26 @@ class App extends Component {
       contacts: contacts.filter((contact) => contact.id !== id),
     }));
 
+  componentDidMount() {
+    // console.log("componentDidMount");
+    const contacts = JSON.parse(localStorage.getItem("contacts"));
+    // console.log(contacts);
+    if (contacts) {
+      this.setState({ contacts });
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    // console.log("componentDidUpdate");
+    // console.log(prevProps);
+    if (this.state.contacts !== prevState.contacts) {
+      // console.log("Изменился стейт");
+      localStorage.setItem("contacts", JSON.stringify(this.state.contacts));
+    }
+    // console.log(prevState);
+    // console.log(this.state);
+  }
+
   render() {
     const { filter } = this.state;
     const visibleContacts = this.getVisibleContacts();
