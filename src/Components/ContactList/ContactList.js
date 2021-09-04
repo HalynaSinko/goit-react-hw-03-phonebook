@@ -4,7 +4,7 @@ import s from "./ContactList.module.css";
 
 const ContactListItem = ({ id, name, number, onRemove }) => {
   return (
-    <li key={id} className={s.listItem}>
+    <li className={s.listItem}>
       <span className={s.name}>{name}: </span>
       <span className={s.number}>{number}</span>
       <button onClick={() => onRemove(id)} className={s.btn}>
@@ -18,7 +18,9 @@ const ContactList = ({ contacts, onRemove }) => {
   if (contacts.length === 0) return null;
   return (
     <ul className={s.list}>
-      {contacts.map((contact) => ContactListItem({ ...contact, onRemove }))}
+      {contacts.map((contact) => (
+        <ContactListItem key={contact.id} {...contact} onRemove={onRemove} />
+      ))}
     </ul>
   );
 };
