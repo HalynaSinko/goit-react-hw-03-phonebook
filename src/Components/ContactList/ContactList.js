@@ -1,4 +1,6 @@
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import * as actions from "../../redux/actions";
 
 import s from "./ContactList.module.css";
 
@@ -25,8 +27,35 @@ const ContactList = ({ contacts, onRemove }) => {
   );
 };
 
+const getVisibleContacts = (allContacts, filter) => {
+  const normalizedFilter = filter.toLowerCase();
+  return allContacts.filter((contact) =>
+    contact.name.toLowerCase().includes(normalizedFilter)
+  );
+};
+
+// const mapStateToProps = (state) => {
+//   const { items, filter } = state.contacts;
+//   const visibleContacts = getVisibleContacts(items, filter);
+//   return {
+//     contacts: visibleContacts,
+//   };
+// };
+
+const mapStateToProps = ({ contacts: { item, filter } }) => ({
+  contacts: getVisibleContacts(item, filter),
+});
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onRemove: (id) => dispatch(actions.removeContact(id)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ContactList);
+
 ContactList.propTypes = {
-  contacts: PropTypes.arrayOf(
+  items: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string.isRequired,
       name: PropTypes.string.isRequired,
@@ -35,5 +64,3 @@ ContactList.propTypes = {
   ),
   onRemove: PropTypes.func.isRequired,
 };
-
-export default ContactList;

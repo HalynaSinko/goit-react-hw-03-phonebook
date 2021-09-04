@@ -1,4 +1,6 @@
 import { Component } from "react";
+import { connect } from "react-redux";
+import * as actions from "../../redux/actions";
 import PropTypes from "prop-types";
 import { v4 as uuidv4 } from "uuid";
 
@@ -15,7 +17,6 @@ class ContactForm extends Component {
   handleChangeForm = (event) => {
     const { name, value } = event.target;
     this.setState({ [name]: value });
-    // console.log("name", name, "-----", "value", value);
   };
 
   handleSubmitForm = (event) => {
@@ -73,4 +74,11 @@ ContactForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
 };
 
-export default ContactForm;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onSubmit: ({ id, name, number }) =>
+      dispatch(actions.addContact({ id, name, number })),
+  };
+};
+
+export default connect(null, mapDispatchToProps)(ContactForm);
