@@ -34,17 +34,17 @@ const getVisibleContacts = (allContacts, filter) => {
   );
 };
 
-// const mapStateToProps = (state) => {
-//   const { items, filter } = state.contacts;
-//   const visibleContacts = getVisibleContacts(items, filter);
-//   return {
-//     contacts: visibleContacts,
-//   };
-// };
+const mapStateToProps = (state) => {
+  const { items, filter } = state.contacts;
+  const visibleContacts = getVisibleContacts(items, filter);
+  return {
+    contacts: visibleContacts,
+  };
+};
 
-const mapStateToProps = ({ contacts: { item, filter } }) => ({
-  contacts: getVisibleContacts(item, filter),
-});
+// const mapStateToProps = ({ contacts: { item, filter } }) => ({
+//   contacts: getVisibleContacts(item, filter),
+// });
 
 const mapDispatchToProps = (dispatch) => {
   return {
